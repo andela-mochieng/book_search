@@ -8,8 +8,8 @@ class TestSearchView(TestCase):
     def setUp(self):
         self.client = Client()
         self.search_url = reverse('search')
-        self.book_title = 'TestBook'
-        self.book_title2 = {'title': 'TestBook'}
+        self.book_title = 'Test Book'
+        self.book_title2 = {'title': 'Test Book'}
         self.category_name = {'name': 'History'}
         self.category_name2 = 'History'
         self.create_category = Category.objects.create(
@@ -27,7 +27,8 @@ class TestSearchView(TestCase):
         """Test available book is returned when searched"""
         response = self.client.get(self.search_url, self.book_title2)
         self.assertTrue(response.status_code, 200)
-        self.assertIn(self.book_title, str(response.context['request']))
+        print(str(response.context['request']))
+        self.assertContains(self.book_title, str(response.context['request']))
 
     def test_partial_category_name_search_is_unsucessful(self):
         """Test partial category name search is unsucessful"""
